@@ -17,7 +17,6 @@ def create_random_forest(comm, rank, data):
 	#TODO - return the decision trees
 
 
-
 if __name__ == '__main__':
 
 	comm = MPI.COMM_WORLD

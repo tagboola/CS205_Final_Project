@@ -31,8 +31,8 @@ class DecisionTree:
 
 		#assign head
 		purity = subset.purity()
-		if purity > PURITY_THRESHOLD
-			return
+		if purity > PURITY_THRESHOLD:
+			return 
 
 		#selects k features without replacement
 		#TODO match up the features 1 is star rating? if so ignore that feature
@@ -67,5 +67,11 @@ class DecisionTree:
 		add_leaf(node, LEFT_SIDE, subset_left) 
 		add_leaf(node, RIGHT_SIDE, subset_right)
 
+
+	
+	#classify an item
+	def decide(item):
+		#TODO
+		pass
 
 

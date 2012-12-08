@@ -10,8 +10,9 @@ class Node:
 		return "Feature: %d, Threshold %d" %(self.feature, self.threshold)
 
 	def decide(item):
+		#TODO node can be a leaf
+
 		if item.getFeature(self.feature) < self.threshold:
 			return left
-			
-		return right
 
+		return right
