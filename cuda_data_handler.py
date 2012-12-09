@@ -42,7 +42,7 @@ __global__ void purity_kernel(float *data, float *result, int n, int f){
 """
 
 
-class DataHandler: 
+class DataHandlerCUDA: 
 
 	def __init__(self, data):
 		#push data to the gpu
