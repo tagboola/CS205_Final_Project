@@ -8,9 +8,10 @@ import numpy as np
 import dtree
 
 p_root = 0
-data_file = 'medium_data.txt'
-data_features_file = 'small_data_features.txt'
-number_of_trees = 31
+data_features_file = 'data/features.txt'
+data_training_file = 'data/training/full.txt'
+data_testing_file = 'data/testing/medium.txt'
+number_of_trees = 8
 
 def print_tree(tree, str):
     """
@@ -78,7 +79,7 @@ def get_reviews():
 
 	reviews = []
 
-	f = open('small_data.txt', 'r+')
+	f = open(data_testing_file, 'r+')
 	for line in f:
 		reviews.append(dict(zip(features, np.float64(line.split(',')))))
 	f.close()
@@ -87,7 +88,7 @@ def get_reviews():
 
 def read():
 
-	data = np.loadtxt(fname=data_file, delimiter=',')
+	data = np.loadtxt(fname=data_training_file, delimiter=',')
 	f = open(data_features_file, 'r+')
 	features = f.read().split(',')
 	f.close()
