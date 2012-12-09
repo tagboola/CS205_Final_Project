@@ -1,6 +1,6 @@
 import numpy as np
 
-THRESHOLD = 0.1
+THRESHOLD = 0.2
 
 def create(subset, features):
 	"""
@@ -49,7 +49,7 @@ def classify(d_tree, review):
 	# If <= to split, index into the left node i.e "< 55" else
 	# go to the right node i.e "> 55"
 
-	if review[feature] <= split:
+	if float(review[feature]) <= split:
 		#Go to the left
 		return classify(d_tree[feature]["< %f" % (split)],review)
 	else:
