@@ -5,7 +5,7 @@ from data_handler import DataHandler
 
 class Subset(SubsetBase):
 
-	K_FEATURES = 2
+	K_FEATURES = 5
 
 	def __init__(self, indices, data_handler=None, data=None):
 		self.indices = indices

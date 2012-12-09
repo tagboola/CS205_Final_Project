@@ -9,6 +9,20 @@ p_root = 0
 data_file = 'small_data.txt'
 data_features_file = 'small_data_features.txt'
 
+def print_tree(tree, str):
+    """
+    This function recursively crawls through the d-tree and prints it out in a
+    more readable format than a straight print of the Python dict object. 
+    """
+    if type(tree) == dict:
+        print "%s%s" % (str, tree.keys()[0])
+        for item in tree.values()[0].keys():
+            print "%s\t%s" % (str, item)
+            print_tree(tree.values()[0][item], str + "\t")
+    else:
+        print "%s\t->\t%s" % (str, tree)
+
+
 def create_random_forest(comm, rank, data, features):
 
 	size = comm.Get_size()
@@ -20,7 +34,7 @@ def create_random_forest(comm, rank, data, features):
 	decision_tree = dtree.create(subset, features)
 
 	print "-------------"
-	print decision_tree
+	print print_tree(decision_tree,"")
 	print "-------------"
 
 	#TODO - return the decision trees
