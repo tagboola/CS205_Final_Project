@@ -36,7 +36,7 @@ class Subset(SubsetBase):
 
 		return label
 
-	def split(feature):
+	def split():
 		"""Returns a tuple of arrays of (values, subsets) given the feature to split on."""
 		return
 
@@ -46,7 +46,7 @@ class Subset(SubsetBase):
 
 	def empty():
 		"""Checks if the subset is empty."""
-		return
+		return len(self.indices) == 0
 	
 	def feature_count():
 		"""Returns the number of features remaining."""

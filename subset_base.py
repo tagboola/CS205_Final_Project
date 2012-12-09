@@ -14,7 +14,7 @@ class SubsetBase(object):
 		return
 
 	@abc.abstractmethod
-	def split(feature):
+	def split():
 		"""Returns a tuple of arrays of (values, subsets) given the feature to split on."""
 		return
 
