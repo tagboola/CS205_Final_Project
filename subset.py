@@ -24,7 +24,7 @@ class Subset(SubsetBase):
 		if len(self.labels) == 1:
 			return self.labels.keys()[0]
 
-		return False
+		return None
 
 
 	def majority_label():
@@ -62,7 +62,7 @@ class Subset(SubsetBase):
 				best_feature, threshold, max_purity = feature, results['threshold'], results['purity']
 
 		#Split remaining data
-		subset_left, subset_right = split(best_feature, threshold)
+		subset_left, subset_right = get_subsets(best_feature, threshold)
 		return best_feature, threshold, subset_left, subset_right
 
 	def get_subsets(feature, threshold):
