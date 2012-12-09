@@ -57,7 +57,7 @@ def get_reviews():
 
 	f = open('small_data.txt', 'r+')
 	for line in f:
-		reviews.append(dict(zip(features, line.split(','))))
+		reviews.append(dict(zip(features, float(line.split(',')))))
 	f.close()
 
 	return reviews
@@ -91,7 +91,7 @@ if __name__ == '__main__':
 			answers.append(dtree.classify(tree, review))
 		print answers
 		answer = Counter(answers).most_common(1)[0][0]
-		if answer != float(review['star']):
+		if answer != review['star']:
 			print "Answer: %f, Star: %f" %(answer, float(review['star'])) 
 			errors += 1
 
