@@ -1,44 +1,53 @@
-class Subset: 
+import abc
 
-	def __init__(self, data_handler, indices):
+from subset_base import SubsetBase
 
-		self.data_handler = data_handler
-		self.indices = np.int32(indices)
-		self.indices_d = gpu.to_gpu(self.indices)
-		self.results_d = gpu.empty_like(self.indices_d)
+class Subset(SubsetBase):
 
-	def shape():
-		return self.data_handler.shape()
+	def __init__(self, indices, features, data_handler=None, data=None):
+		self.indices = indices
+		self.features = features
+		self.labels = None
+		if data_handler:
+			self.data_handler = data_handler
+		else:
+			self.data_handler = DataHandler(data)
 
-	def purity():
-		self.data_handler.purity(self.indices_d, self.results_d)
+	def pure():
+		"""Determine if subset is pure. Returns label of pure item if pure and None otherwise"""
+		if not self.labels:
+			self.labels = self.data_handler.get_labels()
 
-		results_gpu = self.results_d.get()
+		if len(self.labels) == 1:
+			return self.labels.keys()[0]
 
-		#TODO compute purity
-		purity = 0
+		return False
 
-		return purity 
 
-	def split(feature, threshold):
-		self.data_handler.split(self.indices_d, self.results_d, feature, threshold)
+	def majority_label():
+		"""Return label of majority item."""
+		if not self.labels:
+			self.labels = self.data_handler.get_labels()
 
-		#items that are above the threshold are positive, items that are below are negative
-		#the number represents the class. if it is -4 then the review has rating 4 and it
-		#did was below the threshold
-		results_gpu = self.results_d.get()
+		majority, count = None, -1
+		for label, value in self.labels.iteritems():
+			if value > count:
+				majority = label
 
-		#create a new subset object. all those that are
-		left_indices = [i for i in self.indices if results_gpu[i] > 0] #items that are above the threshold
-		right_indices = [i for i in self.indices if results_gpu[i] < 0]
+		return label
 
-		#sanity check
-		assert len(left_indices) + len(right_indices) == len(results_gpu)
+	def split(feature):
+		"""Returns a tuple of arrays of (values, subsets) given the feature to split on."""
+		return
 
-		left_subset = Subset(self.data_handler, left_indices)
-		right_subset = Subset(self.data_handler, right_indices)
-		return left_subset, right_subset
+	def best_feature():
+		"""Determines the feature that best splits the subset."""
+		return
 
-	def test_purity_on_split(feature, threshold):
-		pass
-
+	def empty():
+		"""Checks if the subset is empty."""
+		return
+	
+	def feature_count():
+		"""Returns the number of features remaining."""
+		return

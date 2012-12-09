@@ -1,7 +1,7 @@
 from sys import argv
 import numpy as np
 from mpi4py import MPI
-import data_handler
+from subset import Subset
 
 p_root = 0
 
@@ -11,8 +11,8 @@ def create_random_forest(comm, rank, data):
 
 	data = comm.bcast(data, root=p_root)	
 	
-	data_handler = DataHandler(data)
-	decision_tree = DecisionTree(data_handler)
+	subset = Subset(data)
+	decision_tree = DecisionTree(subset)
 
 	#TODO - return the decision trees
 

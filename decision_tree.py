@@ -1,7 +1,6 @@
 import random
 
 from Node import Node
-from Subset import Subset
 
 
 class DecisionTree: 
