@@ -29,5 +29,3 @@ class DataHandler:
 				right.append(index)
 
 		return left, right
-
-

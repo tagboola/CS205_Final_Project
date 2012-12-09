@@ -7,7 +7,7 @@ class Subset(SubsetBase):
 	PURITY_THRESHOLD = 0.95
 	K_FEATURES = 10
 
-	def __init__(self, indices, features, data_handler, data):
+	def __init__(self, indices, features, data_handler=None, data=None):
 		self.indices = indices
 		self.features = features
 		self.labels = None
@@ -67,8 +67,8 @@ class Subset(SubsetBase):
 
 	def get_subsets(feature, threshold):
 		left, right = self.data_handler.split(self.indices, feature, threshold)
-		left_subset = Subset(left, self.data_handler, False)
-		right_subset = Subset(right, self.data_handler, False)
+		left_subset = Subset(left, data_handler=self.data_handler)
+		right_subset = Subset(right, data_handler=self.data_handler)
 		return left_subset, right_subset
 
 	def test_purity_on_split(feature, threshold):
