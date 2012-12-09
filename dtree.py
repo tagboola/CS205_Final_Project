@@ -16,11 +16,8 @@ def create(subset, features):
 
 	if left_subset.get_size() ==  subset.get_size() or right_subset.get_size == subset.get_size():
 		return subset.majority_label()
-
-
 	# Create node based on optimal feature
 	d_tree = {features[feature]:{}}
-
 	# For each unique value, create a subtree and add it
 	# a child to the decision tree
 	left_child = create(left_subset, features)
