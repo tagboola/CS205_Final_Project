@@ -10,6 +10,7 @@ import dtree
 p_root = 0
 data_file = 'medium_data.txt'
 data_features_file = 'small_data_features.txt'
+number_of_trees = 24
 
 def print_tree(tree, str):
     """
@@ -28,7 +29,7 @@ def print_tree(tree, str):
 def serial_create_random_forest(data, features):
 
 	forest = []
-	for i in range(number_of_decision_trees):
+	for i in range(number_of_trees):
 		#boostrap sampling
 		n, f = data.shape
 		indices = [random.randint(0,n-1) for i in range(n)]
@@ -48,17 +49,21 @@ def parallel_create_random_forest(comm, rank, data, features):
 	features = comm.bcast(features, root=p_root)
 	data = comm.bcast(data, root=p_root)	
 
-	#boostrap sampling
-	n, f = data.shape
-	indices = [random.randint(0,n-1) for i in range(n)]
-	subset = Subset(indices, data=data)
-	decision_tree = dtree.create(subset, features)
+	trees = []
+	num_trees = number_of_trees/size
+	for t in range(num_trees):
+		#boostrap sampling
+		n, f = data.shape
+		indices = [random.randint(0,n-1) for i in range(n)]
+		subset = Subset(indices, data=data)
+		decision_tree = dtree.create(subset, features)
+		trees.append(decision_tree)
 
-	forest = comm.gather(decision_tree, root=p_root)
+	forest = comm.gather(trees, root=p_root)
 
-	# print "-------------"
-	# print print_tree(decision_tree,"")
-	# print "-------------"
+	if rank == p_root:
+		#flatten array
+		forest = [tree for trees in forest for tree in trees]
 
 	return forest
 
@@ -100,6 +105,7 @@ if __name__ == '__main__':
 	#forest = serial_create_random_forest(data, features)
 
 	if rank == p_root:
+		print "Random Forest is built. Beginning classification."
 		errors = 0
 		reviews = get_reviews()
 		for review in reviews:
