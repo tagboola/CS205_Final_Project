@@ -15,5 +15,5 @@ class SubsetBase(object):
 
 	@abc.abstractmethod
 	def split():
-		"""Returns a tuple of arrays of (values, subsets) given the feature to split on."""
+		"""Returns a triple of (feature, threshold, left_subset, right_subset) given the feature to split on."""
 		return

@@ -43,10 +43,38 @@ class Subset(SubsetBase):
 		"""Returns a tuple of arrays of (values, subsets) given the feature to split on."""
 
 		n, f = self.data_handler.get_shape()
+		
 		#selects k features without replacement
 		#TODO match up the features 1 is star rating? if so ignore that feature
 		features = random.sample(range(f), K_FEATURES) 
 
-		return
+		#try different splits
+		splits = {}
+		for feature in features:
+			threshold = #TODO - come up with the threshold?
+			purity = test_purity_on_split(feature, threshold)			
+			splits[feature] = {'threshold':threshold, 'purity':purity}
+
+		#finds optimal split, from all tests
+		best_feature, threshold, max_purity = None, None, -1
+		for feature, results in splits.iteritems():
+			if results['purity'] > max_purity:
+				best_feature, threshold, max_purity = feature, results['threshold'], results['purity']
+
+		#Split remaining data
+		subset_left, subset_right = split(best_feature, threshold)
+		return best_feature, threshold, subset_left, subset_right
+
+	def get_subsets(feature, threshold):
+		return 
+
+	def test_purity_on_split(feature, threshold):
+		purity = 0
+		return purity
+
+
+
+
+
 
 
