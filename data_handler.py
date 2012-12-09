@@ -2,7 +2,7 @@ import numpy as np
 
 class DataHandler: 
 
-	def __init__(self, data):
+	def __init__(self, features, data):
 		self.data = np.float64(data)
 
 	def get_shape():
@@ -19,8 +19,15 @@ class DataHandler:
 		return labels
 
 
+	def split(indices, feature, threshold):
+		left, right = [], []
 
+		for index in indices:
+			if self.data[index][feature] >= threshold:
+				left.append(index)
+			else:
+				right.append(index)
 
-
+		return left, right
 
 
