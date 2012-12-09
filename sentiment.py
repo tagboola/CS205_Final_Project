@@ -57,7 +57,7 @@ def get_reviews():
 
 	f = open('small_data.txt', 'r+')
 	for line in f:
-		reviews.append(dict(zip(features, float(line.split(',')))))
+		reviews.append(dict(zip(features, np.float64(line.split(',')))))
 	f.close()
 
 	return reviews
