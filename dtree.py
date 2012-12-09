@@ -4,8 +4,8 @@ THRESHOLD = 0.2
 
 def create(subset, features):
 	"""
-	This function takes in a Subset object and returns a decision
-	tree in the form of a dictionary
+	Creates a decision tree in the form of a dictionary given
+	a subset and array of strings representing the features
 	"""
 	# If the subset is pure, return the label majority label
 	if subset.pure() < THRESHOLD:
@@ -13,7 +13,8 @@ def create(subset, features):
 	# Determine the best attribute to split point and return
 	# the values and subsets associated with that split point
 	(feature, split_value, left_subset, right_subset) = subset.split()
-
+	# If one of the sets is of zero side (or one is the same size as the original)
+	# return the majority label
 	if left_subset.get_size() ==  subset.get_size() or right_subset.get_size == subset.get_size():
 		return subset.majority_label()
 	# Create node based on optimal feature
@@ -30,8 +31,8 @@ def create(subset, features):
 
 def classify(d_tree, review):
 	"""
-	This function takes in a processed review hash and returns
-	the classifcation determined by the decision tree
+	Classifies a processed review by traversing the given decision
+	tree until a leaf node containing a classification is reached
 	"""
 	# If the tree is a string, we have reached a leaf
 	# node, so return it
@@ -45,7 +46,6 @@ def classify(d_tree, review):
 	split = float(d_tree[feature].keys()[0][1:])
 	# If <= to split, index into the left node i.e "< 55" else
 	# go to the right node i.e "> 55"
-
 	if review[feature] <= split:
 		#Go to the left
 		return classify(d_tree[feature]["< %f" % (split)],review)
