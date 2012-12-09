@@ -40,11 +40,12 @@ class Subset(SubsetBase):
 		return label
 
 	def split():
-		"""Returns a tuple of arrays of (values, subsets) given the feature to split on."""
-
+		"""
+		Returns a tuple of arrays of (feature, values, subsets) 
+		given the feature to split on.
+		"""
 		n, f = self.data_handler.get_shape()
-		
-		#selects k features without replacement
+		# Selects k features without replacement
 		#TODO match up the features 1 is star rating? if so ignore that feature
 		features = random.sample(range(f), K_FEATURES) 
 
@@ -65,7 +66,8 @@ class Subset(SubsetBase):
 		subset_left, subset_right = get_subsets(best_feature, threshold)
 		return best_feature, threshold, subset_left, subset_right
 
-	def get_subsets(feature, threshold):
+	def purity(feature, threshold):
+		
 		return 
 
 	def test_purity_on_split(feature, threshold):
