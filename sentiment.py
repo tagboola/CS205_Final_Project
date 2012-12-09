@@ -10,7 +10,7 @@ import dtree
 p_root = 0
 data_file = 'medium_data.txt'
 data_features_file = 'small_data_features.txt'
-number_of_trees = 24
+number_of_trees = 31
 
 def print_tree(tree, str):
     """
@@ -49,8 +49,11 @@ def parallel_create_random_forest(comm, rank, data, features):
 	features = comm.bcast(features, root=p_root)
 	data = comm.bcast(data, root=p_root)	
 
+	num_trees = int(number_of_trees/size)
+	if rank < number_of_trees%size:
+		num_trees += 1	
+
 	trees = []
-	num_trees = number_of_trees/size
 	for t in range(num_trees):
 		#boostrap sampling
 		n, f = data.shape
@@ -105,20 +108,20 @@ if __name__ == '__main__':
 	#forest = serial_create_random_forest(data, features)
 
 	if rank == p_root:
-		print "Random Forest is built. Beginning classification."
+		print "Random Forest was built. Beginning classification."
 		errors = 0
 		reviews = get_reviews()
 		for review in reviews:
 			answers = []
 			for tree in forest:
 				answers.append(dtree.classify(tree, review))
-			print answers
+			#print answers
 			answer = Counter(answers).most_common(1)[0][0]
 			if answer != review['star']:
 				print "Answer: %f, Star: %f" %(answer, float(review['star'])) 
 				errors += 1
 
-		print errors
+		print "%i error(s)." % errors
 
 
 
