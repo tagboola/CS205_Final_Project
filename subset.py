@@ -53,7 +53,7 @@ class Subset(SubsetBase):
 		splits = {}
 		for feature in features:
 			threshold = #TODO - come up with the threshold?
-			purity = test_purity_on_split(feature, threshold)			
+			purity = purity(feature, threshold)			
 			splits[feature] = {'threshold':threshold, 'purity':purity}
 
 		#finds optimal split, from all tests
@@ -66,9 +66,17 @@ class Subset(SubsetBase):
 		subset_left, subset_right = get_subsets(best_feature, threshold)
 		return best_feature, threshold, subset_left, subset_right
 
+
 	def purity(feature, threshold):
 		
 		return 
+
+	def get_subsets(feature, threshold):
+		left, right = self.data_handler.split(self.indices, feature, threshold)
+		left_subset = Subset(left, data_handler=self.data_handler)
+		right_subset = Subset(right, data_handler=self.data_handler)
+		return left_subset, right_subset
+
 
 	def test_purity_on_split(feature, threshold):
 		purity = 0
