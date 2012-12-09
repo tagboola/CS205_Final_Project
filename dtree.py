@@ -8,19 +8,21 @@ def create(subset, features):
 	tree in the form of a dictionary
 	"""
 	# If the subset is pure, return the label majority label
-	if subset.pure() < THRESHOLD
+	if subset.pure() < THRESHOLD:
 		return subset.majority_label()
 	# Determine the best attribute to split point and return
 	# the values and subsets associated with that split point
 	(feature, split_value, left_subset, right_subset) = subset.split()
+	print features, feature
 	# Create node based on optimal feature
 	d_tree = {features[feature]:{}}
+
 	# For each unique value, create a subtree and add it
 	# a child to the decision tree
 	left_child = create(left_subset, features)
-	d_tree[feature]["< %f" % (split_value)] = left_child
+	d_tree[features[feature]]["< %f" % (split_value)] = left_child
 	right_child = create(right_subset, features)
-	d_tree[feature]["> %f" % (split_value)] = right_child
+	d_tree[features[feature]]["> %f" % (split_value)] = right_child
 		
 	return d_tree
 

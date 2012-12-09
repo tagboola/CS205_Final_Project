@@ -1,58 +1,63 @@
-import numpy as np
 import math 
+import random
+import numpy as np
 
-class DataHandler: 
+
+from data_handler_base import DataHandlerBase
+
+class DataHandler(DataHandlerBase):
 
 	LABEL_INDEX = 0
 
-	def __init__(self, features, data):
+	def __init__(self, data):
 
 		self.data = np.float64(data)
 
-	def get_shape():
+	def get_shape(self):
 		return self.data.shape
 
-	def get_freq(indices):
+	def get_freq(self, indices):
 		freq = {}
 		for index in indices:
-			key = data[index][LABEL_INDEX]
+			key = self.data[index][self.LABEL_INDEX]
 			if freq.has_key(key):
 				freq[key] += 1
 			else:
 				freq[key] = 1
+		return freq
 
-	def get_labels(indices):
-		return get_freq(indices)
+	def get_labels(self, indices):
+		return self.get_freq(indices)
 
 
-	def purity(indices):
-		freq = get_freq(indices)
+	def purity(self, indices):
+		freq = self.get_freq(indices)
 		gini = 0
 		for value in freq.values():
 			gini += math.pow(float(value)/len(indices),2)
 		return 1 - gini
 	
-	def get_threshold(feature, indices):
+	def get_threshold(self, feature, indices):
 		min_val = 10000000
 		max_val = -1
 		for index in indices:
-			val = data[index][feature]
+			val = self.data[index][feature]
 			if val > max_val:
 				max_val = val
 			if val < min_val:
 				min_val = val
 		return random.random()*(max_val-min_val) + min_val		
 
-	def test_split(feature, threshold, indices):
-		threshold = get_threshold(feature, indices)		
+	def test_split(self, indices, feature):
+		threshold = self.get_threshold(feature, indices)		
 		# Initialize variables
 		freq1, freq2 = {}, {}
 		n1, n2 = 0, 0
 		# Compute the frequency of the labels for the two
 		# two subsets i.e <= threshold or > threshold
 		for index in indices:
-			key = data[index][0]
-			if data[index][feature] <= threshold:
+			key = self.data[index][0]
+			if self.data[index][feature] <= threshold:
 				n1 += 1
 				if freq1.has_key(key):
 					freq1[key] += 1
@@ -65,8 +70,8 @@ class DataHandler:
 				else:
 					freq2[key] = 1
 		#Print out subsets		
-		print subset1
-		print subset2
+		print freq1
+		print freq2
 		gini1, gini2 = 0, 0
 		#Calculate the Gini impurity of both sets
 		for freq in freq1.values():
@@ -85,7 +90,7 @@ class DataHandler:
 			
 
 
-	def split(indices, feature, threshold):
+	def split(self, indices, feature, threshold):
 		left, right = [], []
 		for index in indices:
 			if self.data[index][feature] <= threshold:

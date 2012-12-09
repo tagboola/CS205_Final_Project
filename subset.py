@@ -1,6 +1,7 @@
 import abc
-
+import random
 from subset_base import SubsetBase
+from data_handler import DataHandler
 
 class Subset(SubsetBase):
 
@@ -14,13 +15,13 @@ class Subset(SubsetBase):
 		else:
 			self.data_handler = DataHandler(data)
 
-	def pure():
+	def pure(self):
 		"""Determine if subset is pure. Returns label of pure item if pure and None otherwise"""
 		return self.data_handler.purity(self.indices)
 
 
 
-	def majority_label():
+	def majority_label(self):
 		"""Return label of majority item."""
 		labels = self.data_handler.get_labels(self.indices)
 
@@ -31,19 +32,20 @@ class Subset(SubsetBase):
 
 		return majority
 
-	def split():
+	def split(self):
 		"""
 		Returns a tuple of arrays of (feature, values, subsets) 
 		given the feature to split on.
 		"""
+
 		n, f = self.data_handler.get_shape()
 		# Selects k features without replacement
-		features = random.sample(range(1, f), K_FEATURES) 
+		features = random.sample(range(1, f), self.K_FEATURES) 
 
 		# Try k different splits
 		splits = {}
 		for feature in features:
-			(gini, threshold) = self.data_handler.test_split(feature)			
+			(gini, threshold) = self.data_handler.test_split(self.indices, feature)			
 			splits[feature] = {'threshold':threshold, 'gini':gini}
 
 		# Finds the optimal split from all test
@@ -53,11 +55,11 @@ class Subset(SubsetBase):
 				best_feature, threshold, min_gini = feature, results['threshold'], results['gini']
 
 		#Split remaining data
-		subset_left, subset_right = get_subsets(best_feature, threshold)
+		subset_left, subset_right = self.get_subsets(best_feature, threshold)
 		return best_feature, threshold, subset_left, subset_right
 
 
-	def get_subsets(feature, threshold):
+	def get_subsets(self,feature, threshold):
 		left, right = self.data_handler.split(self.indices, feature, threshold)
 		left_subset = Subset(left, data_handler=self.data_handler)
 		right_subset = Subset(right, data_handler=self.data_handler)
