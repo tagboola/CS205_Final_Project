@@ -41,7 +41,7 @@ def classify(d_tree, review):
 	# the review
 	feature = d_tree.keys()[0]
 	# Parse the node e.g convert "> 55" into 55
-	split = int(d_tree[feature].keys()[0][1:])
+	split = float(d_tree[feature].keys()[0][1:])
 	# If <= to split, index into the left node i.e "< 55" else
 	# go to the right node i.e "> 55"
 	if review[feature] <= split:
