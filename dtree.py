@@ -1,28 +1,24 @@
 
 
+
+
 def create(subset):
 	"""
 	This function takes in a Subset object and returns a decision
 	tree in the form of a dictionary
 	"""
-	# If no more features are present, return the label
-	# with the highest frequency 
-	if subset.feature_count() == 0:
+	# If the subset is pure, return the label majority label
+	if subset.pure():
 		return subset.majority_label()
-	# If all of them have the same label, return that label
-	pure_label = subset.pure()	
-	if pure_label not None:
-		return pure_label
-	# Determine the best attribute to split on, create node
-	# and retrieve unique values that will be used to split the data
-	feature = subset.best_feature()
-	d_tree = { feature:{} }
-	(values, subsets) = subset.split(feature)
+	# Determine the best attribute to split point and return
+	# the values and subsets associated with that split point
+	(feature, split_value, subsets) = subset.split()
 	# For each unique value, create a subtree and add it
 	# a a child to the decision tree
-	for ii in range(len(values)):
-		child = create(subsets[ii])
-		d_tree[feature][values[ii]] = child
+	left = create(subsets[0])
+	d_tree[feature]["< %f" % (split_value)] = left
+	right = create(subsets[1])
+	d_tree[feature]["> %f" % (split_value)] = right
 		
 	return d_tree
 
@@ -34,12 +30,21 @@ def classify(d_tree, review):
 	"""
 	# If the tree is a string, we have reached a leaf
 	# node, so return it
-	if type(d_tree) == type("")
+	if type(d_tree) == type(""):
 		return d_tree
 	# Get the top level feature, and then determine
 	# what child to travel to based on the value in
 	# the review
-	feature = tree.keys()[0]
-	child = tree[root][review[feature]]
-	return classify(child, review)
+	feature = d_tree.keys()[0]
+	# Parse the node e.g convert "> 55" into 55
+	split = int(d_tree[feature].keys()[0][1:])
+	# If <= to split, index into the left node i.e "< 55" else
+	# go to the right node i.e "> 55"
+	if review[feature] <= split:
+		#Go to the left
+		return classify(d_tree[feature]["< %f" % (split)],review)
+	else:
+		#Go to the right
+		return classify(d_tree[feature]["> %f" % (split)],review)
+
 	
