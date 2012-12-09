@@ -5,7 +5,7 @@ from data_handler import DataHandler
 
 class Subset(SubsetBase):
 
-	K_FEATURES = 5
+	K_FEATURES = 10
 
 	def __init__(self, indices, data_handler=None, data=None):
 		self.indices = indices
@@ -14,6 +14,9 @@ class Subset(SubsetBase):
 			self.data_handler = data_handler
 		else:
 			self.data_handler = DataHandler(data)
+
+	def get_size(self):
+		return len(self.indices)
 
 	def pure(self):
 		"""Determine if subset is pure. Returns label of pure item if pure and None otherwise"""
@@ -63,6 +66,7 @@ class Subset(SubsetBase):
 		left, right = self.data_handler.split(self.indices, feature, threshold)
 		left_subset = Subset(left, data_handler=self.data_handler)
 		right_subset = Subset(right, data_handler=self.data_handler)
+
 		return left_subset, right_subset
 
 

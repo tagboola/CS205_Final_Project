@@ -49,7 +49,8 @@ class DataHandler(DataHandlerBase):
 		return random.random()*(max_val-min_val) + min_val		
 
 	def test_split(self, indices, feature):
-		threshold = self.get_threshold(feature, indices)		
+		threshold = self.get_threshold(feature, indices)
+
 		# Initialize variables
 		freq1, freq2 = {}, {}
 		n1, n2 = 0, 0
@@ -70,8 +71,6 @@ class DataHandler(DataHandlerBase):
 				else:
 					freq2[key] = 1
 		#Print out subsets		
-		print freq1
-		print freq2
 		gini1, gini2 = 0, 0
 		#Calculate the Gini impurity of both sets
 		for freq in freq1.values():
@@ -83,11 +82,7 @@ class DataHandler(DataHandlerBase):
 		# Combine the Gini values, multiplying them by the probability
 		# of each subset
 		total_gini = (n1/float(n1+n2))*gini1 + (n2/float(n1+n2))*gini2
-		print total_gini
-		return (total_gini, threshold)
-		 
-				
-			
+		return (total_gini, threshold)			
 
 
 	def split(self, indices, feature, threshold):
