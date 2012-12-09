@@ -11,5 +11,5 @@ lowercase_count
 punctuation_count
 alpha_count
 num_count
-upper_to_lower
+lower_to_upper
 alpha_to_char
