@@ -4,8 +4,10 @@ from mpi4py import MPI
 from subset import Subset
 
 p_root = 0
+data_file = 'small_data.txt'
+data_features_file = 'small_data_features.txt'
 
-def create_random_forest(comm, rank, data):
+def create_random_forest(comm, rank, data, features):
 
 	size = comm.Get_size()
 	data = comm.bcast(data, root=p_root)	
@@ -18,6 +20,14 @@ def create_random_forest(comm, rank, data):
 
 	#TODO - return the decision trees
 
+def read():
+
+	data = np.loadtxt(fname=data_file, delimiter=',')
+	f = open(data_features_file, 'r+')
+	features = f.read().split(',')
+	f.close()
+
+	return data, features
 
 if __name__ == '__main__':
 
@@ -25,12 +35,13 @@ if __name__ == '__main__':
 	rank = comm.Get_rank()
 
 	if rank == p_root:
-		data = read(data) #TODO
+		data, features = read()
 	else:
-		data = None
+		data, features = None, None
 
 
-	rf = create_random_forest(comm, rank, data)
+
+	rf = create_random_forest(comm, rank, data, features)
 
 
 
