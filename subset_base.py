@@ -17,18 +17,3 @@ class SubsetBase(object):
 	def split():
 		"""Returns a tuple of arrays of (values, subsets) given the feature to split on."""
 		return
-
-	@abc.abstractmethod
-	def best_feature():
-		"""Determines the feature that best splits the subset."""
-		return
-
-	@abc.abstractmethod
-	def empty():
-		"""Checks if the subset is empty."""
-		return
-	
-	@abc.abstractmethod
-	def feature_count():
-		"""Returns the number of features remaining."""
-		return

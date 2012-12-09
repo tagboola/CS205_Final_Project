@@ -4,6 +4,9 @@ from subset_base import SubsetBase
 
 class Subset(SubsetBase):
 
+	PURITY_THRESHOLD = 0.95
+	K_FEATURES = 10
+
 	def __init__(self, indices, features, data_handler=None, data=None):
 		self.indices = indices
 		self.features = features
@@ -38,16 +41,12 @@ class Subset(SubsetBase):
 
 	def split():
 		"""Returns a tuple of arrays of (values, subsets) given the feature to split on."""
+
+		n, f = self.data_handler.get_shape()
+		#selects k features without replacement
+		#TODO match up the features 1 is star rating? if so ignore that feature
+		features = random.sample(range(f), K_FEATURES) 
+
 		return
 
-	def best_feature():
-		"""Determines the feature that best splits the subset."""
-		return
 
-	def empty():
-		"""Checks if the subset is empty."""
-		return len(self.indices) == 0
-	
-	def feature_count():
-		"""Returns the number of features remaining."""
-		return
