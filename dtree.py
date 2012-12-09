@@ -8,7 +8,7 @@ def create(subset, features):
 	a subset and array of strings representing the features
 	"""
 	# If the subset is pure, return the label majority label
-	if subset.pure() < THRESHOLD:
+	if subset.purity() < THRESHOLD:
 		return subset.majority_label()
 	# Determine the best attribute to split point and return
 	# the values and subsets associated with that split point

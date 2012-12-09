@@ -71,7 +71,7 @@ class DataHandler(DataHandlerBase):
 		# Compute the frequency of the labels for the two
 		# two subsets i.e <= threshold or > threshold
 		for index in indices:
-			key = self.data[index][LABEL_INDEX]
+			key = self.data[index][self.LABEL_INDEX]
 			if self.data[index][feature] <= threshold:
 				n1 += 1
 				if freq1.has_key(key):
