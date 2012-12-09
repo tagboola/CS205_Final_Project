@@ -1,1 +1,15 @@
-star,onegram_count,onegram_score,bigram_count,bigram_score,positive_count,negative_count,character_count,uppercase_count,lowercase_count,punctuation_count,alpha_count,num_count, lower_to_upper,alpha_to_char
+star
+onegram_count
+onegram_score
+bigram_count
+bigram_score
+positive_count
+negative_count
+character_count
+uppercase_count
+lowercase_count
+punctuation_count
+alpha_count
+num_count
+lower_to_upper
+alpha_to_char

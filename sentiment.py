@@ -9,9 +9,9 @@ import dtree
 
 p_root = 0
 data_features_file = 'data/features.txt'
-data_training_file = 'data/training/full.txt'
+data_training_file = 'data/training/medium.txt'
 data_testing_file = 'data/testing/medium.txt'
-number_of_trees = 8
+number_of_trees = 12
 
 def print_tree(tree, str):
     """
@@ -25,24 +25,6 @@ def print_tree(tree, str):
             print_tree(tree.values()[0][item], str + "\t")
     else:
         print "%s\t->\t%s" % (str, tree)
-
-
-def serial_create_random_forest(data, features):
-
-	forest = []
-	for i in range(number_of_trees):
-		#boostrap sampling
-		n, f = data.shape
-		indices = [random.randint(0,n-1) for i in range(n)]
-		subset = Subset(indices, data=data)
-		decision_tree = dtree.create(subset, features)
-		forest.append(decision_tree)
-
-		print "-------------"
-		print print_tree(decision_tree,"")
-		print "-------------"
-
-	return forest
 
 def parallel_create_random_forest(comm, rank, data, features):
 	size = comm.Get_size()
@@ -72,11 +54,7 @@ def parallel_create_random_forest(comm, rank, data, features):
 	return forest
 
 def get_reviews():
-
-	f = open(data_features_file, 'r+')
-	features = f.read().split(',')
-	f.close()
-
+	features = get_features()
 	reviews = []
 
 	f = open(data_testing_file, 'r+')
@@ -86,14 +64,21 @@ def get_reviews():
 
 	return reviews
 
-def read():
 
-	data = np.loadtxt(fname=data_training_file, delimiter=',')
+def get_features():
+	features = []
+	
 	f = open(data_features_file, 'r+')
-	features = f.read().split(',')
+	for line in f:
+		features.append(line.strip())
 	f.close()
 
-	return data, features
+	return features
+
+def get_data():
+	data = np.loadtxt(fname=data_training_file, delimiter=',')
+	return data
+
 
 if __name__ == '__main__':
 
@@ -101,12 +86,12 @@ if __name__ == '__main__':
 	rank = comm.Get_rank()
 
 	if rank == p_root:
-		data, features = read()
+		data = get_data()
+		features = get_features()
 	else:
 		data, features = None, None
 
 	forest = parallel_create_random_forest(comm, rank, data, features)
-	#forest = serial_create_random_forest(data, features)
 
 	if rank == p_root:
 		print "Random Forest was built. Beginning classification."
@@ -122,14 +107,4 @@ if __name__ == '__main__':
 				print "Answer: %f, Star: %f" %(answer, float(review['star'])) 
 				errors += 1
 
-		print "%i error(s)." % errors
-
-
-
-
-	
-
-
-
-
-
+		print "%i error(s) / %i reviews. %f %% accuracy" % (errors, len(reviews), float(len(reviews)-errors)/len(reviews))
