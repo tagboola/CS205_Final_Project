@@ -23,10 +23,6 @@ def create_random_forest(comm, rank, data, features):
 	print decision_tree
 	print "-------------"
 
-	print 
-
-
-
 	#TODO - return the decision trees
 
 def read():
