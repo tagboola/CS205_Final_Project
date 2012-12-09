@@ -8,11 +8,13 @@ p_root = 0
 def create_random_forest(comm, rank, data):
 
 	size = comm.Get_size()
-
 	data = comm.bcast(data, root=p_root)	
 	
-	subset = Subset(data)
-	decision_tree = DecisionTree(subset)
+	h, w = data.shape
+	features = None
+	indices = range(h)
+	subset = Subset(indices, data=data)
+	decision_tree = DecisionTree(subset, features)
 
 	#TODO - return the decision trees
 

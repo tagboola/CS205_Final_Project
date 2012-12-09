@@ -1,24 +1,26 @@
 
 
+THRESHOLD = 0.1
 
-
-def create(subset):
+def create(subset, features):
 	"""
 	This function takes in a Subset object and returns a decision
 	tree in the form of a dictionary
 	"""
 	# If the subset is pure, return the label majority label
-	if subset.pure():
+	if subset.pure() < THRESHOLD
 		return subset.majority_label()
 	# Determine the best attribute to split point and return
 	# the values and subsets associated with that split point
-	(feature, split_value, subsets) = subset.split()
+	(feature, split_value, left_subset, right_subset) = subset.split()
+	# Create node based on optimal feature
+	d_tree = {features[feature]:{}}
 	# For each unique value, create a subtree and add it
-	# a a child to the decision tree
-	left = create(subsets[0])
-	d_tree[feature]["< %f" % (split_value)] = left
-	right = create(subsets[1])
-	d_tree[feature]["> %f" % (split_value)] = right
+	# a child to the decision tree
+	left_child = create(left_subset, features)
+	d_tree[feature]["< %f" % (split_value)] = left_child
+	right_child = create(right_subset, features)
+	d_tree[feature]["> %f" % (split_value)] = right_child
 		
 	return d_tree
 
