@@ -1,7 +1,8 @@
 import math 
-import random
 import numpy as np
-from data_handler_base import DataHandlerBase
+import random
+
+from ..datahandler_base import DataHandlerBase
 
 class DataHandler(DataHandlerBase):
 

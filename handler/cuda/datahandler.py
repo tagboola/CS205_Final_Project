@@ -3,46 +3,9 @@ import pycuda.autoinit
 import pycuda.compiler as nvcc
 import pycuda.gpuarray as gpu
 
+from ..datahandler_base import DataHandlerBase
 
-split_kernel_source = \
-"""
-/**
-* @param[in] n total number of samples
-* @params[in] f total number of features
-*/
-__global__ void split_kernel(float *data, float *indices, float *result, int feature, float threshold, int height, int n, int f){
-
-	int idx = blockDim.x * blockIdx.x + threadIdx.x;
-
-	if (idx < subset){
-
-		int sample_idx = indices[idx]*f;
-
-		if (data[sample_idx+f] >= threshold)
-			result[idx] = data[sample_idx];
-		else
-			result[idx] = -1*data[sample_idx];
-	}
-
-}
-"""
-
-purity_kernel_source =\
-"""
-/**
-* @param[in] n total number of samples
-* @params[in] f total number of features
-*/
-__global__ void purity_kernel(float *data, float *result, int n, int f){
-
-	int idx = blockDim.x * blockIdx.x + threadIdx.x;
-
-	//TODO
-}
-"""
-
-
-class DataHandlerCUDA: 
+class DataHandlerCUDA(DataHandlerBase): 
 
 	def __init__(self, data):
 		#push data to the gpu

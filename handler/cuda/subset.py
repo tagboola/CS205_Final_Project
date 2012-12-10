@@ -1,6 +1,7 @@
 import abc
 
-from subset_base import SubsetBase
+from ..subset_base import SubsetBase
+from datahandler import DataHandlerCUDA
 
 class SubsetCUDA(SubsetBase):
 

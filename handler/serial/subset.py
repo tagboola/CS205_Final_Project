@@ -1,7 +1,8 @@
 import abc
 import random
-from subset_base import SubsetBase
-from data_handler import DataHandler
+
+from ..subset_base import SubsetBase
+from datahandler import DataHandler
 
 class Subset(SubsetBase):
 
