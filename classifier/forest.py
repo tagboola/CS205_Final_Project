@@ -1,4 +1,6 @@
+import pickle
 from collections import Counter
+
 
 class RandomForest: 
 
@@ -15,3 +17,15 @@ class RandomForest:
 			answers.append(answer)
 		answer = Counter(answers).most_common(1)[0][0]
 		return answer
+
+	def dump(self, filename):
+		f = open(filename, 'w+')
+		pickle.dump(self.forest, f)
+		f.close()
+
+	@staticmethod
+	def load(filename):
+		f = open(filename, 'r+')
+		rf = RandomForest(pickle.load(f))
+		f.close()
+		return rf
