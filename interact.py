@@ -25,27 +25,22 @@ if __name__ == '__main__':
 	while True:
 
 		print "Please enter a phrase to analyze it's sentiment:"
-		text = sys.stdin.readline()
+		text = sys.stdin.readline().strip()
 
 		if text == 'quit':
 			break
+		elif text == '':
+			continue
 
 		f = get_features()
 		f.remove('star')
-		print f
-		print "====="
-		print text
 		processed_text = dict(zip(f, features.extract(text)))
-		print "-----"
-		print processed_text
 
 		answer = forest.classify(processed_text)
 
-		print str(answer),
 		if answer < 3:
-			print "Negative"
+			print "Negative\n"
 		elif answer > 3:
-			print "Positive"
+			print "Positive\n"
 		else:
-			print "Neutral"
-		print "-----"
+			print "Neutral\n"

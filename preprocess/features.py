@@ -55,7 +55,6 @@ def extract(text):
 
 	"""process each word in the text"""
 	for word in words:
-		print word
 		if word not in stop_words and word in onegram_positivity_index:
 
 			onegram_score += onegram_positivity_index[word]
