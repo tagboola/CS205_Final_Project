@@ -1,3 +1,4 @@
 *.pyc
 *.txt~
 *.goutputstream*
+/data/classifiers

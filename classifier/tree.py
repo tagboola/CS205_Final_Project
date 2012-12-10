@@ -3,7 +3,7 @@ import numpy as np
 
 class DecisionTree: 
 	
-	PURITY_THRESHOLD = 0.2
+	PURITY_THRESHOLD = 0.3
 
 	def __init__(self, subset, features):
 		self.tree = self.init_helper(subset, features)

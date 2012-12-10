@@ -14,7 +14,7 @@
 # Needed to execute parallel jobs
 # The number of processes to launch [1-32]
 # (Change the number)
-#$ -pe ortegpu_reserve 6
+#$ -pe ortegpu_reserve 4
 
 # Import environment and profile
 . /etc/profile
