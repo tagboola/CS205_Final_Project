@@ -2,16 +2,26 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Clairvoyance</title>
-	<link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-    <script type="text/javascript" src="scripts/bootstrap-2.0.2.js"></script>
+		<link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+		<script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
 		<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
 		<link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>
 		<link href='stylesheets/custom.css' rel="stylesheet" type="text/css">
+		<script type = "text/javascript" >
+			$(function() {// I use jQuery in this example
+				$('#results-carousel').carousel({
+					interval : false
+				});
+				$('#implementation-carousel').carousel({
+					interval : false
+				});		
+			});
+		</script>
 	</head>
-	<body>
-		<div class="container">
+	<body data-spy="scroll" data-target=".navbar" data-offset="50">
+		<div class="container" >
 			<div class="navbar navbar-fixed-top">
 				<div class="navbar-inner">
 					<ul class="nav">
@@ -33,7 +43,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class='home span12' data-spy="scroll" data-target=".navbar">
+			<div class='home span12'>
 				<div class="row section" id="video">
 					<div class="span12">
 						<h1>Clairvoyance</h1>
@@ -48,132 +58,146 @@
 							</div>
 						</div>
 					</div>
-					<div class="row section" id="motivation">
-						<div class="span12">
-							<h1>Motivation</h1>
-							<div class='well'>
-								<p class="lead">
-									<em>Clairvoyance</em> is a sentiment analysis tool that outputs a rating between 1 (negative) and 5 (positive) for a given text. It obtains these ratings using a random forest classifier, built using MPI and trained on a Yelp! academic dataset, which was pre-processed using MapReduce.
-								</p>
-							</div>
+				</div>
+				<div class="row section" id="motivation">
+					<div class="span12">
+						<h1>Motivation</h1>
+						<div>
+							<p class="lead">
+								The majority of natural language processing libraries and sentiment analysis tools are capable of detecting the polarity (positive, neutral, or negative) and subjectivity of text. Unfortunately, many of these tools do not take emotions into account. A system that achieves this level of granularity would greatly increase the effectiveness of current tools. For example, email preprocessing software could use the system to parse emails and triage them based on the sentiment of the message.
+
+While the "beyond" sentiment analysis mentioned above is our primary interest, it is necessary for us to fully understand how sentiment analysis works first.Traditionally, to build a sentiment analysis tool, one needs a large corpus of text already annotated with sentiment data to train an algorithm. Because attaining these large, specialized corpora can be difficult, we propose a different approach. Instead of using an annotated corpus, we use a collection of Yelp! online reviews to build to train our machine learning algorithm. While this data is not annotated with text sentiment information, we make the assumption that the star ratings of Yelp! reviews, which are located in the data set, provide an accurate measure of the sentiment of a review. 							</p>
 						</div>
 					</div>
-					<div class="row section" id="implementation">
-						<div class="span12">
-							<h1>Implementation</h1>
-							<div class="carousel slide" id='implementation-carousel'>
-								<div class="carousel-inner">
-									<div class="active item">
-										<div class='row'>
-											<div class='span6 offset1'>
-												<h3>Processing the Data</h3>
-												<p class="lead">
-													Using <strong>MapReduce</strong>, a feature set was created from the training and testing data. The features that were included in the set are shown to the right.
-													The One-gram and Bi-gram scores for the text are calculated based on an index of one-gram and bi-gram scores created using the entire training corpus.
-												</p>
-											</div>
-											<div class='span4'>
-												<ul class='unstyled'>
-													<li>
-														One-gram scores
-													</li>
-													<li>
-														One-gram count
-													</li>
-													<li>
-														Bi-gram count
-													</li>
-													<li>
-														Positive word count
-													</li>
-													<li>
-														Negative word count
-													</li>
-													<li>
-														Character count
-													</li>
-													<li>
-														Count of uppercase letters
-													</li>
-													<li>
-														Count of lowercase letters
-													</li>
-													<li>
-														Count of punctuation characters
-													</li>
-													<li>
-														Count of alphabet characters
-													</li>
-													<li>
-														Count of numbers
-													</li>
-													<li>
-														Ratio of uppercase to lowercase characters
-													</li>
-													<li>
-														Ratio of alphabets to total character count
-													</li>
-												</ul>
-											</div>
-											<div class="1"></div>
+				</div>
+				<div class="row section" id="implementation">
+					<div class="span12">
+						<h1>Implementation</h1>
+						<div class="carousel slide" id='implementation-carousel'>
+							<div class="carousel-inner">
+								<div class="active item">
+									<div class='row'>
+										<div class='span6 offset1'>
+											<h3>Processing the Data</h3>
+											<p class="lead">
+												Using <strong>MapReduce</strong>, a feature set was created from the training and testing data. The features that were included in the set are shown to the right.
+												The One-gram and Bi-gram scores for the text are calculated based on an index of one-gram and bi-gram scores created using the entire training corpus.
+											</p>
+										</div>
+										<div class='span4'>
+											<ul class='unstyled'>
+												<li>
+													One-gram scores
+												</li>
+												<li>
+													One-gram count
+												</li>
+												<li>
+													Bi-gram count
+												</li>
+												<li>
+													Positive word count
+												</li>
+												<li>
+													Negative word count
+												</li>
+												<li>
+													Character count
+												</li>
+												<li>
+													Count of uppercase letters
+												</li>
+												<li>
+													Count of lowercase letters
+												</li>
+												<li>
+													Count of punctuation characters
+												</li>
+												<li>
+													Count of alphabet characters
+												</li>
+												<li>
+													Count of numbers
+												</li>
+												<li>
+													Ratio of uppercase to lowercase characters
+												</li>
+												<li>
+													Ratio of alphabets to total character count
+												</li>
+											</ul>
+										</div>
+										<div class="span1"></div>
+									</div>
+								</div>
+								<div class="item">
+									<div class='row'>
+										<div class='span5 offset1'>
+											<h3>Training the Algorithm</h3>
+											<p class='lead'>
+												A random forest is created using the processed training data. First the data is sampled with replacement multiple times.
+												Each random sample is used to create 1 decision tree. The trees are created in parallel using <strong>MPI</strong>. The number of decision trees,
+												the threshold for purity, and the number of features used for splitting at each node of each decision tree is configurable.
+												Once the Random Forest is trained, it is saved in a serialized format so that it can be easily loaded when making predictions.
+											</p>
+										</div>
+										<div class='span5'>
+											<img src="images/training.png" class="img-rounded span4"/>
 										</div>
 									</div>
-									<div class="item">
-										<div class='row'>
-											<div class='span6 offset1'>
-												<h3>Training the Algorithm</h3>
-												<p>
-													A random forest is created using the processed training data. First the data is sampled with replacement multiple times.
-													Each random sample is used to create 1 decision tree. The trees are created in parallel using <strong>MPI</strong>. The number of decision trees,
-													the threshold for purity, and the number of features used for splitting at each node of each decision tree is configurable.
-													Once the Random Forest is trained, it is saved in a serialized format so that it can be easily loaded when making predictions.
-												</p>
-											</div>
-											<div class='span5'>
-												<img src="images/training.png" class="img-rounded span4"/>
-											</div>
-										</div>
-									</div>
-									<div class="item">
-										<div class='row'>
+								</div>
+								<div class="item">
+									<div class='row'>
+										<div class="span5 offset1">
 											<h3>Testing</h3>
-											<p>
+											<p class="lead">
 												To test the algorithm, we used a separate set of Yelp! reviews, which were pre-processed to extract a feature set.
 												This feature set is taken in as input to predict the sentiment (a rating) on a scale of 1-5. 1 represents a
 												very negative sentiment, and 5 represents a very positive sentiment. This rating is compared with the reviews original rating.
 											</p>
-											<div class='span5'>
-												<img src="images/testing.png" class="img-rounded span4"/>
-											</div>
+										</div>
+										<div class='span6'>
+											<img src="images/testing.png" class="img-rounded span4"/>
 										</div>
 									</div>
 								</div>
-								<a class="carousel-control left" href="#implementation-carousel" data-slide="prev">&lsaquo;</a>
-								<a class="carousel-control right" href="#implementation-carousel" data-slide="next">&rsaquo;</a>
 							</div>
+							<a class="carousel-control left" href="#implementation-carousel" data-slide="prev">&lsaquo;</a>
+							<a class="carousel-control right" href="#implementation-carousel" data-slide="next">&rsaquo;</a>
 						</div>
 					</div>
-					<div class="row" id="results">
-						<div class="span12">
-							<h1>Results</h1>
-							<div id="results-carousel" class="carousel slide">
-								<div class="carousel-inner">
-									<div class="active item">
-										<h3>Accuracy</h3>
-										<img src="images/accuracy.png" class="img-rounded span6 offset3"/>
-										<div class="span3"></div>
-									</div>
-									<div class="item">
-										<h3>Performance</h3>
+				</div>
+				<div class="row section" id="results">
+					<div class="span12">
+						<h1>Results</h1>
+						<div id="results-carousel" class="carousel slide">
+							<div class="carousel-inner">
+								<div class="active item">
+									<h3>Performance</h3>
+									<div class="row">
+										<div class="span5 offset1">
+											<img src="images/2_processors.png" class="img-rounded span5"/>
+										</div>
+										<img src="images/1_processor.png" class="img-rounded span5"/>
+										<div class="span1"></div>
 									</div>
 								</div>
-								<a class="carousel-control left" href="#results-carousel" data-slide="prev">&lsaquo;</a>
-								<a class="carousel-control right" href="#results-carousel" data-slide="next">&rsaquo;</a>
+								<div class="item">
+									<h3>Accuracy</h3>
+									<div class="row">
+										<div class="span3"></div>
+										<img src="images/accuracy.png" class="img-rounded span6"/>
+										<div class="span3"></div>
+									</div>
+								</div>
 							</div>
+							<a class="carousel-control left" href="#results-carousel" data-slide="prev">&lsaquo;</a>
+							<a class="carousel-control right" href="#results-carousel" data-slide="next">&rsaquo;</a>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 		</div>
 	</body>
 </html>
