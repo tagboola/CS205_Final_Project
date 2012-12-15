@@ -1,0 +1,24 @@
+body {
+	font-family: 'Gafata', sans-serif
+}
+.home {
+	text-align: center;
+	padding-top: 80px;
+}
+.home div {
+	display: block;
+	margin-bottom: 40px;
+}
+
+.home h1 {
+	color:#336699;
+	margin-bottom:10px;
+}
+
+.section p {
+	text-align: left;    
+  }
+
+.section img {
+	margin:auto;
+}
